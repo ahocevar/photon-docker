@@ -1,4 +1,5 @@
 FROM phusion/baseimage:0.11
+ARG HOST
 # Set correct environment variables.
 ENV HOME /root
 
@@ -40,6 +41,9 @@ RUN wget https://github.com/komoot/photon/releases/download/0.3.0/photon-0.3.0.j
 # RUN mvn clean package
 # RUN java -jar target/photon-0.2.3-SNAPSHOT.jar
 
+# Import nominatim data
+RUN java -jar photon-0.3.0.jar -nominatim-import -host $HOST -port 5432 -languages de
+
 # Run photon
-CMD java -jar photon-0.3.0.jar -nominatim-import -host $NOMINATIM_PORT_5432_TCP_ADDR -port $NOMINATIM_PORT_5432_TCP_PORT -languages de && java -jar photon-0.3.0.jar -host $NOMINATIM_PORT_5432_TCP_ADDR -port $NOMINATIM_PORT_5432_TCP_PORT -languages de
+CMD java -jar photon-0.3.0.jar -host $NOMINATIM_PORT_5432_TCP_ADDR -port $NOMINATIM_PORT_5432_TCP_PORT
 

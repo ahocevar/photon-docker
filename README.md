@@ -10,7 +10,7 @@ Uses phusion/baseimage (Ubuntu 14.04). Requires a running nominatim for data imp
 To rebuild the image locally execute
 
 ```
-docker build -t photon .
+docker build --build-arg host=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nominatim_container) -t photon .
 ```
 
 # Running
