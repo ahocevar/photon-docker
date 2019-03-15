@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.16
+FROM phusion/baseimage:0.11
 # Set correct environment variables.
 ENV HOME /root
 
@@ -33,11 +33,13 @@ EXPOSE 2322
 # Expose ES
 EXPOSE 9200
 
-# Download photon release 0.2.2
-RUN wget http://photon.komoot.de/data/photon-0.2.2.jar
+# Download photon release 0.3.0
+RUN wget https://github.com/komoot/photon/releases/download/0.3.0/photon-0.3.0.jar
 
 # VOLUME /photon/photon_data
 # RUN mvn clean package
 # RUN java -jar target/photon-0.2.3-SNAPSHOT.jar
 
-CMD java -jar photon-0.2.2.jar  -nominatim-import -host $NOMINATIM_PORT_5432_TCP_ADDR -port $NOMINATIM_PORT_5432_TCP_PORT -languages de
+# Run photon
+CMD java -jar photon-0.3.0.jar -nominatim-import -host $NOMINATIM_PORT_5432_TCP_ADDR -port $NOMINATIM_PORT_5432_TCP_PORT -languages de && java -jar photon-0.3.0.jar -host $NOMINATIM_PORT_5432_TCP_ADDR -port $NOMINATIM_PORT_5432_TCP_PORT -languages de
+
